@@ -10,8 +10,7 @@
     </head>
 
     <body>
-        <canvas id="c">may</canvas>
-        <div>May is awesome</div>
+        <canvas width="1000" height="1000" id="c"></canvas>
         <script id="vertex-shader-2d" type="notjs">
 
           // an attribute will recieve daa from a buffer 
@@ -26,15 +25,16 @@
         </script>
         <script id="fragment-shader-2d" type="notjs">
           // framgnet shaders don't have a default precision
-          precision medium float;
+          precision mediump float;
 
           void main() {
             //gl-FragColor is a special variable a fragment shader is responisble for setting
-            gl_FragColor = vec4(1, 0, 0.5, 1): 
+            gl_FragColor = vec4(1, 0, 0.5, 1);
           }
           
         </script>
-        <script src="webgl.js"></script>
+        <script src="https://webglfundamentals.org/webgl/resources/webgl-utils.js"></script>
+        <script src="webgl.js?1"></script>
 
 
     </body>
