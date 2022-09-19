@@ -1,0 +1,12 @@
+#mandlbrotCanvas  {
+  width: 1280px;
+  height: 739px;
+}
+
+#rectCanvas {
+  width: 1280px;
+  height: 739px;
+  position: absolute;
+  /* z-index: 1; */
+
+}

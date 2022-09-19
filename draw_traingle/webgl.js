@@ -22,7 +22,6 @@ function createProgram(gl, vertexShader, fragmentShader) {
   if(success) {
     return program;
   }
-
 }
 
 
@@ -69,7 +68,7 @@ function main() {
 
   // clear canvas
   gl.clearColor(0,0,0,0);
-  gl.clear(gl.COLOR_BUFFER_BIT);
+  gl.clear(gl.COLOR_BUFFER_BIT); // TODO ?
 
   // tell it to use our program 
   gl.useProgram(program);
@@ -78,12 +77,12 @@ function main() {
   gl.enableVertexAttribArray(positionAttributeLocation);
 
   // bind the position buffer
-  gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+  gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer); // TODO ?
 
   // tell the attrivture how to get data out of position buffer (ARRAY_BUFFER)
   var size = 2;           // 2 componenets per iteration 
   var type = gl.FLOAT;    // the data is 32bit floats
-  var normalize = false;  // don't normalize the data 
+  var normalize = false;  // don't normalize the data ??? 
   var stride = 0;         // 0 = move forward size * sizeof(type) each iteration to get the next psotion 
   var offset = 0;         // start at the beginning of the buffer
   gl.vertexAttribPointer(
@@ -96,14 +95,3 @@ function main() {
 }
 
 main();
-
-
-
-
-
-
-
-
-
-
-

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+
+<head>
+  <link rel="stylesheet" type="text/css" href="index.css" />
+</head>
+
+<body>
+
+  <div id="container">
+
+    <canvas id="one"></canvas>
+    <canvas id="two"></canvas>
+  </div>
+
+  <script>
+
+
+    let canOne = document.querySelector("#one");
+    let canTwo = document.querySelector("#two");
+
+    let container = document.querySelector("#container");
+
+    // set canvas height and width
+    let h = container.scrollHeight;
+
+    canOne.width = container.offsetWidth;
+    canOne.height = h;
+
+    canTwo.width = container.offsetWidth;
+    canTwo.height = h;
+
+    // create canvas contexs
+    let ctxOne = canOne.getContext("2d");
+    let ctxTwo = canTwo.getContext("2d");
+
+    // make bottom one blue 
+    ctxOne.fillStyle = "blue";
+    ctxOne.fillRect(0, 0, canOne.width, canOne.height);
+
+    // event listners for mouse stuff
+    canTwo.addEventListener("mousedown", e => mouseDown(e));
+    canTwo.addEventListener("mousemove", e => mouseMove(e));
+    canTwo.addEventListener("mouseup", e => mouseUp(e));
+
+
+    // global vars needed for box stuff 
+    var startX;
+    var startY;
+    var isDown;
+
+
+    // set context stuff for rect 
+    ctxTwo.strokeStyle = "green";
+    ctxTwo.lineWidth = 1;
+
+
+    function myDrawRect(startX, startY, endX, endY) {
+
+      let rectWidth = endX - startX - ctxTwo.lineWidth;
+      let rectHeight = endY - startY -ctxTwo.lineWidth;
+
+      console.log(startX, startY);
+      console.log(endX, endY);
+
+      
+      ctxOne.fillStyle = "red";
+      ctxOne.fillRect(startX, startY, rectWidth, rectHeight);
+
+      
+      
+
+    }
+
+    function mouseUp(e) {
+      e.preventDefault();
+      
+      let endX = parseInt(e.offsetX);
+      let endY = parseInt(e.offsetY);
+
+      isDown = false;
+      ctxTwo.clearRect(0,0, canTwo.width, canTwo.height);
+
+      myDrawRect(startX, startY, endX, endY);
+
+
+
+    }
+
+
+
+    function mouseDown(e) {
+      e.preventDefault();
+
+      startX = parseInt(e.offsetX) //+ parseInt(e.offsetX);
+      startY = parseInt(e.offsetY) //+ parseInt(e.offsetY);
+      isDown=true;
+      console.log(e);
+    }
+
+    function mouseMove(e) {
+
+      e.preventDefault();
+
+      if(!isDown) {
+        return
+      }
+
+      let mouseX = parseInt(e.offsetX) ;
+      let mouseY = parseInt(e.offsetY) ;
+
+
+      // width and height of the box to be drawn based on 
+      // starting and this current
+      let width = mouseX - startX;
+      let height = mouseY - startY;
+      
+
+      // clear rect that is on the cvans now
+      ctxTwo.clearRect(0,0, canTwo.width, canTwo.height);
+      ctxTwo.strokeRect(startX, startY, width, height);
+
+      
+
+    }
+
+    // ctxTwo.fillStyle = "red";
+    // ctxTwo.fillRect(0, 0, canTwo.width, canTwo.height);
+
+
+    
+
+  </script>
+
+</body>
+
