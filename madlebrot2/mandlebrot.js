@@ -17,14 +17,14 @@ function getIdx(x, y, width, color) {
 }
 
 function draw() {
-  let mandCanvas = document.querySelector("#mandlbrotCanvas");
-  let mandCtx = mandCanvas.getContext('2d');
-  let scale =  1
+  var mandCanvas = document.querySelector("#mandlbrotCanvas");
+  var mandCtx = mandCanvas.getContext('2d');
+  //let scale =  1
   //mandCanvas.width  = 1280 * scale;
   //mandCanvas.height = 739 * scale;
   // client width in width of inner canvas in pixels
-  let width = mandCanvas.width 
-  let height = mandCanvas.height
+  let width = mandCanvas.width;
+  let height = mandCanvas.height;
   //let width = 1280;
   //let height = 1280;
 
@@ -94,59 +94,6 @@ function mandlebrot(x, y) {
 		}
 	return 0;
 }
-
-
-function mouseDown(e) {
-  e.preventDefault();
-
-  startX = parseInt(e.clientX);
-  startY = parseInt(e.clientY);
-  console.log(startX, startY);
-  isDown=true;
-
-
-
-  console.log(e);
-
-
-}
-
-function mouseMove(e) {
-
-  let mouseX = parseInt(e.clientX);
-  let mouseY = parseInt(e.clientY);
-
-  // width and height of the box to be drawn based on 
-  // starting and this current
-  let width = mouseX - startX;
-  let height = mouseY - startY;
-
-  // clear rect that is on the cvans now
-  rectCtx.clearRect(0,0, rectCanvas.width, rectCanvas.height);
-  rectCtx.strokeRect(startX, startY, width, height);
-
-
-
-  e.preventDefault();
-
-  if(isDown) {
-
-    ctx.stroke
-
-  }
-  
-
-}
-
-
-let rectCanvas = document.querySelector("#rectCanvas");
-var isDown = false;
-var rectCtx = rectCanvas.getContext('2d');
-var startX;
-var startY;
-rectCanvas.addEventListener("mousedown", e => mouseDown(e));
-rectCanvas.addEventListener("mousemove", e => mouseMove(e));
-
 
 
 draw();
