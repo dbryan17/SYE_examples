@@ -45,6 +45,8 @@ int mandlebrot(double x, double y)
   double z_r = 0.0;
   double z_i = 0.0;
   // 32 iterations
+
+  // get x and y values for when this is off by 1
   for (int i = 1; i < 33; i++)
   {
     double z_r2 = (z_r * z_r) - (z_i * z_i) + c_r;
