@@ -97,47 +97,6 @@ function draw(startX, startY, endX, endY, first) {
   prevHeightScale = height_scale;
 
 
-  // // iterate over very pixel
-  // for(let x = startX; x < endX; x++) {
-  //   for(let y = startY; y < endY; y++) {
-  //     // x is x position of pixel, y is y position of pixel 
-  //     // that we want to set color of
-
-  //     // get x and y to an approioate scale for the mandlebrot set, and keep it correctly
-  //     // scaled in terms of not morphing the data
-
-  //     // shift x over by .55 too 
-
-  //     // width/2 --- height/2 is shifting up or down on the y/x axis - 1/2 shifts up .5 --- height shifts down by .5
-  //     // height/2 changes the squishiness/stretch of the grap
-  //     //  shifts left/right - higher is right  zoom      move right/left - right is negative 
-  //     let new_x = (x-3840/2) / (2160/2) - 0.55
-  //     //             move up     zoom
-  //     let new_y = (y-2160/2) / (2160/2)
-
-  //     // let new_y = canvasToCord(x,y)[1];
-  //     // let new_x = canvasToCord(x,y)[0];
-  //     // let new_y = tmp[1];
-
-  //     // find the amount of iterations (0 if in set) to get above 4 outside 0 
-  //     let iterations = mandlebrot(new_x,new_y);
-
-
-  //     pixelData[getIdx(x,y, 3840, 1)] = iterations * 8;
-  //     pixelData[getIdx(x,y, 3840, 3)] = 255;
-
-    
-
-  //     // TDOD make rgb one array element with reducers and such - then turn into one d array
-
-  //     // set color of red at x,y to iterations * 8 to get it to 0 - 256
-  //     // pixelData[red] = iterations * 8;
-
-  //     // make opaque
-  //     //pixelData[red+ 3] = 255;
-
-  //   }
-
   // }
 
   let output = pixelData.reduce((acc, cur) => `${acc}\n${cur}`);

@@ -46,7 +46,6 @@ function draw(startX, startY, endX, endY) {
 
   let height_scale = 2160 / height;
 
-  console.log(width_scale, height_scale);
 
 
 
@@ -59,11 +58,12 @@ function draw(startX, startY, endX, endY) {
 
   ///////
 
-  console.log(width, height)
   
 
   // make array of size width * height * 4 because each element will be rgba
   let pixelData = new Uint8ClampedArray(width * height * 4)
+
+  let output = [];
 
   // iterate over very pixel
   for(let x = startX; x < endX; x++) {
@@ -88,9 +88,19 @@ function draw(startX, startY, endX, endY) {
       // find the amount of iterations (0 if in set) to get above 4 outside 0 
       let iterations = mandlebrot(new_x,new_y, width, height);
 
+      // console.log(x, y, iterations);
+
 
       pixelData[getIdx(x,y, width,1)] = iterations * 8;
       pixelData[getIdx(x,y, width, 3)] = 255;
+
+      output.push([x, y, iterations * 8]);
+
+      
+
+  
+
+
 
     
 
@@ -106,10 +116,20 @@ function draw(startX, startY, endX, endY) {
 
   }
 
-  let output = pixelData.reduce((acc, cur) => `${acc}\n${cur}`);
+   // let output = pixelData.reduce((acc, cur) => `${acc}\n${cur}`);
+
+   let ht = document.querySelector("#mandlebrotOutput");
+
+  output.forEach(curr => {
+     //ht.appendChild(document.createTextNode(`${curr[0]} ${curr[1]} ${curr[2]}`))
+     console.log(`${curr[0]} ${curr[1]} ${curr[2]}`)
+  });
+
+  //let realOutput = output.reduce((acc, curr) => `${acc}\n${curr[0]} ${curr[1]} ${curr[2]}`);
 
   //console.log(output);
-  //document.querySelector("#mandlebrotOutput").innerHTML = output;
+
+  // document.querySelector("#mandlebrotOutput").innerHTML = realOutput;
 
 
   // get image data object from width and height and the pixel data 
@@ -179,9 +199,6 @@ function myDrawRect(startX, startY, endX, endY) {
   let rectWidth = endX - startX - rectCtx.lineWidth;
   let rectHeight = endY - startY - rectCtx.lineWidth;
 
-  console.log(startX, startY);
-  console.log(endX, endY);
-
   draw(startX, startY, endX, endY)
 
   // call draw with right stuff
@@ -219,7 +236,6 @@ function mouseDown(e) {
   startX = parseInt(e.offsetX) * (3840 / 356) //+ parseInt(e.offsetX);
   startY = parseInt(e.offsetY) * (2160 / 200) //+ parseInt(e.offsetY);
   isDown=true;
-  console.log(e);
 }
 
 function mouseMove(e) {
@@ -242,7 +258,6 @@ function mouseMove(e) {
 
   // clear rect that is on the cvans now
   rectCtx.clearRect(0,0, rectCanvas.width, rectCanvas.height);
-  console.log("here")
   rectCtx.strokeRect(startX, startY, width, height);
 
   
