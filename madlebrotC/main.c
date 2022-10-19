@@ -20,14 +20,18 @@ int main()
     for (int y = 0; y < height; y++)
     {
 
-      double new_x = (x - width / 2) / (height / 2) - 0.55;
-      double new_y = (y - height / 2) / (height / 2);
+      double new_x = (x - width / 2.) / (height / 2.) - 0.55;
+      double new_y = (y - height / 2.) / (height / 2.);
 
       int iterations = mandlebrot(new_x, new_y);
 
       pixel_data[getIdx(x, y, width, 1)] = iterations * 8;
       pixel_data[getIdx(x, y, width, 3)] = 255;
-    }
+
+      // printf("%d ", x);
+      // printf("%d ", y);
+      // printf("%d\n", iterations * 8);
+        }
   }
 
   for (int i = 0; i < array_length; i++)
