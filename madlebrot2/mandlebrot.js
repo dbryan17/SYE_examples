@@ -12,7 +12,6 @@ width - width of canvas
 color - (0 = red, 1=green, 2=blue, opage=3)
 */
 
-
 var prevStartX;
 var prevStartY;
 var prevWidthScale;
@@ -28,6 +27,7 @@ function draw(startX, startY, endX, endY, first) {
   // get width and height of canvas - and get context
   var mandCanvas = document.querySelector("#mandlbrotCanvas");
   var mandCtx = mandCanvas.getContext('2d');
+  mandCtx.imageSmoothingEnabled = false; 
   let canWidth = mandCanvas.width;
   let canHeight = mandCanvas.height;
 
@@ -62,8 +62,6 @@ function draw(startX, startY, endX, endY, first) {
     newCanHeight = canWidth * (height/width);
     height_scale = (canHeight/newCanHeight) * height_scale
   }
-
-
 
 
 
