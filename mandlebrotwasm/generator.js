@@ -51,15 +51,12 @@ loadModule().then((Module) => {
 
 
 function draw(Module, genPixles, startX, startY, endX, endY, first) {
-
-  console.log(Module)
-
   // calculate new width and height of image space
   let width = endX - startX;
   let height = endY - startY;
 
   // clear old rectangle
-  mandCtx.clearRect(0, 0, 3840, 2160);
+  mandCtx.clearRect(0, 0, canWidth, canHeight);
 
   // get the current scales
   let widthScale = width / canWidth;
@@ -74,7 +71,6 @@ function draw(Module, genPixles, startX, startY, endX, endY, first) {
     widthScale = widthScale * prevWidthScale;
     heightScale = heightScale * prevHeightScale;
   }
-
   let newCanHeight;
   let newCanWidth;
 
@@ -94,36 +90,41 @@ function draw(Module, genPixles, startX, startY, endX, endY, first) {
 
   // using emscriptens malloc to allocate memory on the emscripten heap 
   // of array this returns a pointer to it 
-  var pixlesPtr = Module._malloc(
+  let pixlesPtr = Module._malloc(
     arrayLength * Uint8Array.BYTES_PER_ELEMENT
   );
 
   // copy data to Emscripten heap (directly accessed from Module.HEAPU8)
-  var dataheap = new Uint8Array(Module.HEAPU8.buffer, arrayLength);
-
+  let dataheap = new Uint8Array(Module.HEAPU8.buffer, pixlesPtr, (arrayLength * Uint8Array.BYTES_PER_ELEMENT));
   // call function 
-  genPixles(startX, startY, newCanWidth, newCanHeight, width, height, widthScale, heightScale, dataheap.byteOffestt);
+  genPixles(startX, startY, newCanWidth, newCanHeight, canWidth, canHeight, widthScale, heightScale, dataheap.byteOffset);
 
   // get the result of the function from the dataheap by way of creating a js array
-  var pixelArray = new Uint8ClampedArray(
+  let pixelArray = new Uint8ClampedArray(
     dataheap.buffer,
-    dataheap.byteOffest,
+    dataheap.byteOffset,
     arrayLength
   );
 
+  
+
+
+
   ///// can also do above as below --- same result //////
 
-  // var pixel_array = new Uint8ClampedArray(
+  // let pixelArray = new Uint8ClampedArray(
   //   Module.HEAPU8.buffer,
-  //   pixles,
+  //   pixlesPtr,
   //   arrayLength
   // );
 
+
   // free the memory
-  Module._free(dataheap.byteOffestt);
+  Module._free(Module.HEAPU8.buffer);
 
   // create the image
-  let data = new ImageData(pixelArray, width, height);
+  let data = new ImageData(pixelArray, canWidth, canHeight);
+  mandCtx.imageSmoothingEnabled = false; 
   // put the image data in the context
   mandCtx.putImageData(data, 0, 0);
 

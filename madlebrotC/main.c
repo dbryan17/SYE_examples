@@ -2,6 +2,7 @@
 #include <stdlib.h>
 // #include <../../../emsdk/emscripten/emscripten.h>
 #include <emscripten/emscripten.h>
+#include <math.h>
 
 /////// emcc -o mandlebrotC.js  main.c -O3  -s NO_EXIT_RUNTIME=1 -s "EXPORTED_RUNTIME_METHODS=['ccall','cwrap']" -s "EXPORTED_FUNCTIONS=['_malloc', '_free']" -s MODULARIZE=1 -s "EXPORT_NAME='loadModule'" -s ALLOW_MEMORY_GROWTH /////////
 
@@ -18,7 +19,7 @@ int mandlebrot(double x, double y)
   double z_i = 0.0;
   // 32 iterations
 
-  for (int i = 1; i < 33; i++)
+  for (int i = 1; i < 64; i++)
   {
     double z_r2 = (z_r * z_r) - (z_i * z_i) + c_r;
     z_i = (2 * z_r * z_i) + c_i;
@@ -41,9 +42,9 @@ EMSCRIPTEN_KEEPALIVE void genPixles(double startX, double startY, double newCanW
 {
   // ptr is array
   // it will alreadly be the right size
-  for (int x = 0; x < width; x++)
+  for (int x = 0; x < floor(newCanWidth); x++)
   {
-    for (int y = 0; y < height; y++)
+    for (int y = 0; y < floor(newCanHeight); y++)
     {
       double new_x = (((widthScale * x) + startX) - width / 2.) / (height / 2.) - .55;
       double new_y = (((heightScale * y) + startY) - height / 2.) / (height / 2.);
@@ -53,7 +54,7 @@ EMSCRIPTEN_KEEPALIVE void genPixles(double startX, double startY, double newCanW
 
       int iterations = mandlebrot(new_x, new_y);
 
-      ptr[getIdx(x, y, width, 1)] = iterations * 8;
+      ptr[getIdx(x, y, width, 1)] = iterations * 4;
       ptr[getIdx(x, y, width, 3)] = 255;
 
       //// imageSmoothingEnabled to false **** this might save time, and also make it
