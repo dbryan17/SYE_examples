@@ -21,16 +21,17 @@ var prevStartY;
 var prevWidthScale;
 var prevHeightScale;
 
+var myModule;
+var myGenPixles
+
 
 // using loadModule promise so this only runs when the "manlebrot.C" script 
 // that wasm generates finishes running; otherwise, we will not have access 
 // to the functions needed
 loadModule().then((Module) => {
 
-
-
   // cwrap is emscripton function that allows us to call the c function as a js function
-  const genPixles = Module.cwrap("genPixles", "null", [
+  let genPixles = Module.cwrap("genPixles", "null", [
     "number",
     "number",
     "number",
@@ -42,11 +43,16 @@ loadModule().then((Module) => {
     "number"
   ]);
 
+  myModule = Module;
+  myGenPixles = genPixles;
+
   draw(Module, genPixles, 0, 0, canWidth, canHeight, true);
 });
 
 
 function draw(Module, genPixles, startX, startY, endX, endY, first) {
+
+  console.log(Module)
 
   // calculate new width and height of image space
   let width = endX - startX;
@@ -95,10 +101,8 @@ function draw(Module, genPixles, startX, startY, endX, endY, first) {
   // copy data to Emscripten heap (directly accessed from Module.HEAPU8)
   var dataheap = new Uint8Array(Module.HEAPU8.buffer, arrayLength);
 
-  console.log(startX, startY, newCanWidth, newCanHeight, width, height, widthScale, heightScale, dataheap.byteOffest)
-
   // call function 
-  genPixles(startX, startY, newCanWidth, newCanHeight, width, height, widthScale, heightScale, dataheap.byteOffest);
+  genPixles(startX, startY, newCanWidth, newCanHeight, width, height, widthScale, heightScale, dataheap.byteOffestt);
 
   // get the result of the function from the dataheap by way of creating a js array
   var pixelArray = new Uint8ClampedArray(
@@ -116,12 +120,18 @@ function draw(Module, genPixles, startX, startY, endX, endY, first) {
   // );
 
   // free the memory
-  Module._free(dataheap.byteOffset);
-
-  console.log(pixelArray)
+  Module._free(dataheap.byteOffestt);
 
   // create the image
   let data = new ImageData(pixelArray, width, height);
   // put the image data in the context
   mandCtx.putImageData(data, 0, 0);
+
+  // reset variables
+  prevStartX = startX;
+  prevStartY = startY;
+  prevWidthScale = widthScale;
+  prevHeightScale = heightScale;
+
 }
+

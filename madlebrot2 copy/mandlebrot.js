@@ -11,6 +11,7 @@ y - y cord
 width - width of canvas 
 color - (0 = red, 1=green, 2=blue, opage=3)
 */
+
 function getIdx(x, y, width, color) {
   let red = y * (width * 4) + x * 4;
   return red + color
@@ -181,6 +182,8 @@ let rectCtx = rectCanvas.getContext("2d");
 rectCanvas.addEventListener("mousedown", e => mouseDown(e));
 rectCanvas.addEventListener("mousemove", e => mouseMove(e));
 rectCanvas.addEventListener("mouseup", e => mouseUp(e));
+
+console.log(rectCanvas.clientHeight)
 
 
 // global vars needed for box stuff 

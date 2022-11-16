@@ -155,6 +155,9 @@ rectCanvas.addEventListener("mousedown", e => mouseDown(e));
 rectCanvas.addEventListener("mousemove", e => mouseMove(e));
 rectCanvas.addEventListener("mouseup", e => mouseUp(e));
 
+console.log(rectCanvas.clientHeight)
+console.log(rectCanvas.clientWidth)
+
 
 // global vars needed for box stuff 
 var startX;
