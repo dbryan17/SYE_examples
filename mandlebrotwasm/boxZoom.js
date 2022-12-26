@@ -21,7 +21,23 @@ function myDrawRect(startX, startY, endX, endY) {
 
   let rectWidth = endX - startX - rectCtx.lineWidth;
   let rectHeight = endY - startY - rectCtx.lineWidth;
+  if(startX > endX) {
+    let tmpStart = startX;
+    startX = endX
+    endX = tmpStart
+  }
+  if(startY > endY) {
+    let tmpStart = startY;
+    startY = endY;
+    endY = tmpStart
 
+  }
+
+  if(startY === endY || startX === endX) {
+    return
+  }
+
+ 
   draw(myModule, myGenPixles, startX, startY, endX, endY, false)
 
 }

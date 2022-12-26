@@ -17,7 +17,7 @@ int mandlebrot(double x, double y)
   double c_i = y;
   double z_r = 0.0;
   double z_i = 0.0;
-  // 32 iterations
+  // 64 iterations
 
   for (int i = 1; i < 64; i++)
   {
@@ -42,6 +42,7 @@ EMSCRIPTEN_KEEPALIVE void genPixles(double startX, double startY, double newCanW
 {
   // ptr is array
   // it will alreadly be the right size
+
   for (int x = 0; x < floor(newCanWidth); x++)
   {
     for (int y = 0; y < floor(newCanHeight); y++)
